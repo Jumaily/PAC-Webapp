@@ -66,3 +66,24 @@ Using:
 		      return $result;
 		      }
 		   }
+		   
+
+
+## Screenshots
+![Login](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/Login.JPG?raw=true)
+![Remove Tech Charge](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/Main-Delete-Technical-Charge.JPG?raw=true)
+![Search Procedures](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/Search-Procedures.JPG?raw=true)
+![Modalities](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/Modalities.JPG?raw=true)
+## Adding Procedures
+![Add Procedures](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/Add-Procedures-techworkflow.JPG?raw=true)
+![See Procedures Tech](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/See-Procedures-techworkflow.JPG?raw=true)
+## Admin Area
+![Admin 1](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/admin1.JPG?raw=true)
+![Admin 2](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/admin2.JPG?raw=true)
+## Logs
+![Database Logs](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/DB-Logs.jpg?raw=true)
+
+
+
+
+
