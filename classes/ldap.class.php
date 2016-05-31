@@ -17,7 +17,7 @@ class ldap_auth{
    function ldap_valiate($u,$p,$domain,$v='',$Successful=false){
       global $SESSION;
       global $UA;
-      $server="LDAP://$domain.uky.edu";
+      $server="gc.$domain.uky.edu";
 
       # connect to ldap server
       $ldapconn = ldap_connect($server) or die("Could not connect to LDAP server.");
