@@ -85,10 +85,10 @@ class adminsection{
       # this string must be unique in not only RIS, but EMR. Checking prod and test
       if($SySQLDB->check_dtl_svc_cd($dtl_svc_cd) || $SySQLDB_PROD->check_dtl_svc_cd($dtl_svc_cd_prod)){
          return "ERROR";
-	      }
-	   else{
-		   return $dtl_svc_cd;
-		   }
+	}
+      else{
+	return $dtl_svc_cd;
+	}
       }
 
 
