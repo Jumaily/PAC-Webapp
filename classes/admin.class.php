@@ -10,6 +10,7 @@ class adminsection{
    function send_to_SyngoDB($u){
       global $MysqlDB;
       global $SySQLDB;
+      global $SySQLDB_PROD;
       global $UA;
 
       $MysqlDB->where('uname', $u);
@@ -20,7 +21,11 @@ class adminsection{
 
       # Insert row by row, if succcess then mark it off as sent
       foreach ($msqldata as $row){
-         $status = $SySQLDB->addprocedures_SB($row);
+	      # Test ; active = Yes "Y"
+         $status = $SySQLDB->addprocedures_SB($row,'Y');
+         # Production ; active = No "N"
+         $prod_insert = $SySQLDB_PROD->addprocedures_SB($row,'N');
+
          if($status == 'success'){
             # Update logs
             $UA->updateweblogs("Syngo insert database: Success. Row ID: {$row['id']}");
@@ -69,13 +74,21 @@ class adminsection{
 
    private function get_dtl_svc_cd($proc_no,$abc,$dept,$dtl_svc_cd=''){
       global $SySQLDB;
+      global $SySQLDB_PROD;
       global $MysqlDB;
+
+      # MySql get Rcode
       $MysqlDB->where('dept', $dept);
       $rcode = $MysqlDB->getone("departments", Array("rcode"));
       $dtl_svc_cd = $rcode['rcode'].$proc_no.$abc;
 
-      # this string must be unique in not only RIS, but EMR
-      return($SySQLDB->check_dtl_svc_cd($dtl_svc_cd))?"ERROR":$dtl_svc_cd;
+      # this string must be unique in not only RIS, but EMR. Checking prod and test
+      if($SySQLDB->check_dtl_svc_cd($dtl_svc_cd) || $SySQLDB_PROD->check_dtl_svc_cd($dtl_svc_cd_prod)){
+         return "ERROR";
+	      }
+	   else{
+		   return $dtl_svc_cd;
+		   }
       }
 
 
