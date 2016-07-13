@@ -12,13 +12,13 @@ class SySQLDB{
 
 
    # Insert Rows into Sybase DB
-   function addprocedures_SB($d,$status='fail'){
+   function addprocedures_SB($d,$active,$status='fail'){
       $sql = "INSERT INTO item (dept, proc_desc_short, proc_desc_long, cpt_code1, cpt_descp2, ".
                            "cpt_descp3, cpt_descp4, body_part_mne, proc_no, dtl_svc_cd, ".
                            "hosp, mammography_flag, active_flag, view_reactions, pacs_flag)".
                            " values ('{$d['dept']}', '{$d['proc_desc_short']}', '{$d['proc_desc_long']}', '{$d['cpt_code1']}', '{$d['cpt_descp2']}',".
                                     "'{$d['cpt_descp3']}', '{$d['cpt_descp4']}', '{$d['body_part_mne']}', '{$d['proc_no']}', '{$d['dtl_svc_cd']}',".
-                                    "'{$d['hosp']}', '{$d['mammography_flag']}', '{$d['active_flag']}', '{$d['view_reactions']}', '{$d['pacs_flag']}')";
+                                    "'{$d['hosp']}', '{$d['mammography_flag']}', '$active', '{$d['view_reactions']}', '{$d['pacs_flag']}')";
       if(!$d['dtl_svc_cd'] || $d['dtl_svc_cd']=="ERROR"){ $staus = 'fail'; }
       else{
          $query = $this->connectionHandle->prepare($sql);
