@@ -80,7 +80,7 @@ $SESSION->set_var("addprocedure", false);
                        </div>
                        <div class="form-group">
                           <label for="CostCenter">Cost Center:</label>
-                          <input id="CostCenter" name="cpt_descp4[]" type="text" value="" maxlength="4"  size="5" required>
+                          <input id="CostCenter" name="cpt_descp4[]" type="text" value="" maxlength="11"  size="10" required>
                        </div>
                   </div>
                </div>
