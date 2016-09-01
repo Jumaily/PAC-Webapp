@@ -80,6 +80,8 @@ Using:
 ## Admin Area
 ![Admin 1](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/admin1.JPG?raw=true)
 ![Admin 2](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/admin2.JPG?raw=true)
+![Admin 2](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/DeActivate.JPG?raw=true)
+
 ## Logs
 ![Database Logs](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/DB-Logs.jpg?raw=true)
 
