@@ -90,6 +90,9 @@ if(isset($_GET['action'])&&$_GET['action']=="markdone"){ $ADM->markdone($_GET['u
                         <div class="form_result-cmd"></div>
                     </div>
                  </div>
+                  <div class="alert alert-info" role="alert">
+                     <a href="admin-activateprocedures.php" class="btn btn-primary" role="button" >Activate / Deactivate Procedures</a>
+                  </div>
                </div>
                <?php  } # else view  ?>
 
