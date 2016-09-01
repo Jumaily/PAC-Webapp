@@ -7,6 +7,8 @@
 ##Overview
 This is a PHP web app that let users submit procedures and send tasks to the RIS system (by Siemens Healthcare). With this app, users can easily use jQuery forms and submit procedures, remove technical charges, etc... 
 
+PACS Admins: Can view procedures submitted, edit/delete them, and/or submit them to RIS Databases.  Can also activate/deactivate procedures from test and production servers.
+
 Using:
 
 * [jQuery](https://jquery.com/) 
