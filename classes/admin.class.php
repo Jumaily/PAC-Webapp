@@ -85,11 +85,33 @@ class adminsection{
       # this string must be unique in not only RIS, but EMR. Checking prod and test
       if($SySQLDB->check_dtl_svc_cd($dtl_svc_cd) || $SySQLDB_PROD->check_dtl_svc_cd($dtl_svc_cd_prod)){
          return "ERROR";
-	}
-      else{
-	return $dtl_svc_cd;
-	}
+	      }
+	   else{
+		   return $dtl_svc_cd;
+		   }
       }
+
+
+
+   # Get data from mysql and send it to sybase
+   function ProceduresStatus_SyngoDB($slist,$active_flag,$envs){
+      global $SySQLDB;
+      global $SySQLDB_PROD;
+      $list = array();
+
+      # clean up list first
+      foreach($slist as $v){
+         $v = preg_replace("/[^A-Za-z0-9 ]/", '', $v);
+         if($v!=''){ array_push($list, $v); }
+         }
+
+      # Process List
+      if($envs['tst']){ foreach($list as $v){ $SySQLDB->update_procedure_status($v,$active_flag); } }
+      if($envs['prd']){ foreach($list as $v){ $SySQLDB_PROD->update_procedure_status($v,$active_flag); }  }
+
+      return $list;
+      }
+
 
 
    }
