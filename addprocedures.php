@@ -50,37 +50,37 @@ $SESSION->set_var("addprocedure", false);
                        </div>
                        <div class="form-group">
                           <label for="CPTCode">CPT Code:</label>
-                          <input id="CPTCode" name="cpt_code1[]" type="text" placeholder="4 Chr" value="" maxlength="5" size="5" required>
+                          <input id="CPTCode" name="cpt_code1[]" type="text" value="" maxlength="5" size="5" required>
                        </div>
                     </div>
                     <div class="col-md-2">
                        <div class="form-group">
                           <label for="Mnemonic-4" >Mnemonic:</label>
-                          <input id="Mnemonic" name="proc_desc_short[]" type="text" placeholder="4 Chr" value="" maxlength="4" size="4" required>
+                          <input id="Mnemonic" name="proc_desc_short[]" type="text" value="" maxlength="4" size="4" required>
                        </div>
                        <div class="form-group">
                           <label for="CDM Code">CDM:</label>
-                          <input id="cdmcode" name="cpt_descp2[]" type="text" placeholder="4 Chr" value="" maxlength="10" size="10" required>
+                          <input id="cdmcode" name="cpt_descp2[]" type="text" value="" maxlength="10" size="10" required>
                        </div>
                     </div>
                     <div class="col-md-4">
                        <div class="form-group">
                           <label for="Description">Description:</label>
-                          <input id="Description" name="proc_desc_long[]" type="text" placeholder="Description 32 Chr" maxlength="32" size="32" value="" required>
+                          <input id="Description" name="proc_desc_long[]" type="text" placeholder="32 Characters Max" maxlength="32" size="32" value="" required>
                        </div>
                        <div class="form-group">
                           <label for="BodyPart">Body Part:</label>
-                          <input id="Body Part" name="body_part_mne[]" type="text" placeholder="Body Part" value="" maxlength="10" required>
+                          <input id="Body Part" name="body_part_mne[]" type="text" value="" maxlength="10" required>
                        </div>
                     </div>
                     <div class="col-md-3">
                        <div class="form-group">
                           <label for="TMID">TMID (if you have it):</label>
-                          <input id="TMID" name="cpt_descp3[]" type="text" placeholder="TMID Code" value="" maxlength="10" size="10">
+                          <input id="TMID" name="cpt_descp3[]" type="text" value="" maxlength="10" size="10">
                        </div>
                        <div class="form-group">
                           <label for="CostCenter">Cost Center:</label>
-                          <input id="CostCenter" name="cpt_descp4[]" type="text" placeholder="4 Chr" value="" maxlength="4"  size="5" required>
+                          <input id="CostCenter" name="cpt_descp4[]" type="text" value="" maxlength="4"  size="5" required>
                        </div>
                   </div>
                </div>
