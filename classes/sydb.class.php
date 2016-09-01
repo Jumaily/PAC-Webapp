@@ -11,6 +11,13 @@ class SySQLDB{
       }
 
 
+   function update_procedure_status($dtl_svc_cd,$active_flag){
+      $sql = "UPDATE item SET active_flag='$active_flag' WHERE dtl_svc_cd='$dtl_svc_cd'";
+      $query = $this->connectionHandle->prepare($sql);
+      $query->execute();
+      }
+
+
    # Insert Rows into Sybase DB
    function addprocedures_SB($d,$active,$status='fail'){
       $sql = "INSERT INTO item (dept, proc_desc_short, proc_desc_long, cpt_code1, cpt_descp2, ".
