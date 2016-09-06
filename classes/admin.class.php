@@ -83,7 +83,7 @@ class adminsection{
       $dtl_svc_cd = $rcode['rcode'].$proc_no.$abc;
 
       # this string must be unique in not only RIS, but EMR. Checking prod and test
-      if($SySQLDB->check_dtl_svc_cd($dtl_svc_cd) || $SySQLDB_PROD->check_dtl_svc_cd($dtl_svc_cd_prod)){
+      if($SySQLDB->check_dtl_svc_cd($dtl_svc_cd) || $SySQLDB_PROD->check_dtl_svc_cd($dtl_svc_cd)){
          return "ERROR";
 	      }
 	   else{
