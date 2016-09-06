@@ -66,7 +66,7 @@ $SESSION->set_var("addprocedure", false);
                     <div class="col-md-4">
                        <div class="form-group">
                           <label for="Description">Description:</label>
-                          <input id="Description" name="proc_desc_long[]" type="text" placeholder="32 Characters Max" maxlength="32" size="32" value="" required>
+                          <input id="Description" name="proc_desc_long[]" type="text" placeholder="32 Characters Max" maxlength="32" size="35" value="" required>
                        </div>
                        <div class="form-group">
                           <label for="BodyPart">Body Part:</label>
