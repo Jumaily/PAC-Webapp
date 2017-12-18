@@ -9,6 +9,8 @@ This is a PHP web app that let users submit procedures and send tasks to the RIS
 
 PACS Admins: Can view procedures submitted, edit/delete them, and/or submit them to RIS Databases.  Can also activate/deactivate procedures from test and production servers.
 
+Back end admin tools (and reporting) that connects to Siemens Sybase DB2 & McKesson PACS Oracle Databases.
+
 Using:
 
 * [jQuery](https://jquery.com/) 
