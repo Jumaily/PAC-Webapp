@@ -62,8 +62,10 @@ Using:
          trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
          }
       }
-	public function __destruct(){ oci_close($this->orc_conn); }
+public function __destruct(){ oci_close($this->orc_conn); }
 	
+	
+
 ### Sybase DB Connections:
 
       # connect to ldap server (Using MC domains, Not AD)
