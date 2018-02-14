@@ -1,5 +1,5 @@
 # Radiology Information System (RIS)
-### Integrating with its Sybase Database
+### Integrating with its Sybase/McKesson Oracle Database
 #### By: Taha Al-jumaily
 
 
@@ -10,6 +10,8 @@ This is a PHP web app that let users submit procedures and send tasks to the RIS
 PACS Admins: Can view procedures submitted, edit/delete them, and/or submit them to RIS Databases.  Can also activate/deactivate procedures from test and production servers.
 
 Back end admin tools (and reporting) that connects to Siemens Sybase DB2 & McKesson PACS Oracle Databases.
+
+Queries McKesson Oracle DB - generate reports (PHI Code/Sections Omitted)
 
 Using:
 
@@ -49,8 +51,20 @@ Using:
         }
         ldap_close($ldapconn);
             
-      
-### Sybase Connections:
+### Oracle DB Connection:
+
+   private $orc_conn = null;
+   public function __construct($username,$password,$port,$servicename,$hostname){
+      $str = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$hostname)(PORT=$port))(CONNECT_DATA=(SERVICE_NAME=$servicename)))";
+      $this->orc_conn = oci_connect($username,$password,$str);
+      if(!$this->orc_conn){
+         $e = oci_error();
+         trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+         }
+      }
+	public function __destruct(){ oci_close($this->orc_conn); }
+	
+### Sybase DB Connections:
 
       # connect to ldap server (Using MC domains, Not AD)
       class SySQLDB{
@@ -85,6 +99,7 @@ Using:
 ![Admin 1](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/admin1.JPG?raw=true)
 ![Admin 2](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/admin2.JPG?raw=true)
 ![Admin 2](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/DeActivate.JPG?raw=true)
+![Admin 2](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/pacs-reports.JPG?raw=true)
 
 ## Logs
 ![Database Logs](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/DB-Logs.jpg?raw=true)
