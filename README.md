@@ -64,6 +64,7 @@ Using:
               trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
               }
            }
+	   
         public function __destruct(){ oci_close($this->orc_conn); }
 	
 
