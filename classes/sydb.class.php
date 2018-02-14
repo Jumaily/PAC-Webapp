@@ -20,13 +20,14 @@ class SySQLDB extends SQLite3{
 
 
    # Check if there is a report in RIS
-   function check_for_report($acc){
+   function check_for_report($acc,$r="No"){
       $sql = "SELECT COUNT(*) as report FROM activity_result WHERE acc_itn=$acc";
       $stmt = $this->connectionHandle->prepare($sql);
       $stmt->execute();
       $result = $stmt->fetchAll();
-      $report = $result[0]['report'];
-      return ($report)?"Yes":"No";
+
+      if(count($result)&&($result[0]['report']>0)){$r = "Yes";}
+      return $r;
       }
 
 
