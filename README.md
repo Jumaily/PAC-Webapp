@@ -53,17 +53,18 @@ Using:
             
 ### Oracle DB Connection:
 
-   private $orc_conn = null;
-   public function __construct($username,$password,$port,$servicename,$hostname){
-      $str = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$hostname)(PORT=$port))(CONNECT_DATA=(SERVICE_NAME=$servicename)))";
-      $this->orc_conn = oci_connect($username,$password,$str);
-      if(!$this->orc_conn){
-         $e = oci_error();
-         trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-         }
-      }
-public function __destruct(){ oci_close($this->orc_conn); }
-	
+
+        private $orc_conn = null;
+
+        public function __construct($username,$password,$port,$servicename,$hostname){
+           $str = "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=$hostname)(PORT=$port))(CONNECT_DATA=(SERVICE_NAME=$servicename)))";
+           $this->orc_conn = oci_connect($username,$password,$str);
+           if(!$this->orc_conn){
+              $e = oci_error();
+              trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+              }
+           }
+        public function __destruct(){ oci_close($this->orc_conn); }
 	
 
 ### Sybase DB Connections:
