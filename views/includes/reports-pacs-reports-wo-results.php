@@ -10,7 +10,7 @@ $swr = $OrcQry->Get_Studies_WO_Results();
 				        <tr>
 				        	<th>Accession #</th>
 				        	<th>Possible Issue</th>
-				        	<th>Report In RIS?</th>
+				        	<th>Reported No Result</th>
 				          	<th>Patient Name</th>
 				          	<th>MRN #</th>
 				          	<th>Exam</th>
