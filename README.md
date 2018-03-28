@@ -109,6 +109,3 @@ Using:
 ![Database Logs](https://github.com/Jumaily/UKY-Radiology-Webapp/blob/master/Screenshots/DB-Logs.jpg?raw=true)
 
 
-
-
-
