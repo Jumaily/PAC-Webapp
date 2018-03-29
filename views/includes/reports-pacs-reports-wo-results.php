@@ -28,7 +28,7 @@ $swr = $OrcQry->Get_Studies_WO_Results();
 				        for($i=0;$i<count($swr['ACCESSION']);$i++){
 				           	echo "<tr>
 				           			<td>{$swr['ACCESSION'][$i]}</td>
-				           			<td>{$OrcQry->check_lila_conflict($swr['ACCESSION'][$i])}</td>
+				           			<td>{$OrcQry->check_db_conflict($swr['ACCESSION'][$i])}</td>
 				           			<td>{$SySQLDB_PROD->check_for_report($swr['ACCESSION'][$i])}</td>
 				           		 	<td>{$swr['PATIENT'][$i]}</td>
 				           		 	<td>{$swr['MRN'][$i]}</td>
