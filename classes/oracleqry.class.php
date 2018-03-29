@@ -25,28 +25,28 @@ class OrcQryCls{
       return $res;
       }
 
-   
+
    # Modalities
    public function Get_Modalites($device){
-      $strSQL = "SELECT SOURCE.MY_CODE, SOURCE.MY_DESCRIPTION, SOURCE.QUERY_CONTEXT_ID, SOURCE.MY_TIMEOUT_MINS, 
-                        SOURCE.MY_STATUS, SOURCE.QUERY_CONTEXT_ID, 
+      $strSQL = "SELECT SOURCE.MY_CODE, SOURCE.MY_DESCRIPTION, SOURCE.QUERY_CONTEXT_ID, SOURCE.MY_TIMEOUT_MINS,
+                        SOURCE.MY_STATUS, SOURCE.QUERY_CONTEXT_ID,
                         FACILITY.MY_DESCRIPTION \"FACILITY_ID_Desc\", ID_CONTEXT.MY_NAME \"OrdSys_MY_NAME\",
 
                   /* Tracking Health */
-                  CASE 
+                  CASE
                   WHEN SOURCE.MY_STATUS = '0' THEN 'Off'
                   WHEN SOURCE.MY_STATUS = '1' THEN 'On'
                   ELSE CAST (SOURCE.MY_STATUS AS VARCHAR (2))
                   END MY_STATUS,
 
                   /* Ordering system indicator */
-                  CASE 
+                  CASE
                   WHEN SOURCE.QUERY_CONTEXT_ID = '2' THEN 'Yes'
                   WHEN SOURCE.QUERY_CONTEXT_ID IS NULL THEN 'No'
                   ELSE CAST (SOURCE.QUERY_CONTEXT_ID AS VARCHAR (21))
                   END QUERY_CONTEXT_ID
 
-                  FROM SOURCE 
+                  FROM SOURCE
                   LEFT JOIN FACILITY ON SOURCE.FACILITY_ID = FACILITY.MY_FACILITY_ID
                   LEFT JOIN ID_CONTEXT ON SOURCE.ACCESSOR_CONTEXT_ID = ID_CONTEXT.MY_CONTEXT_ID
 
@@ -59,12 +59,38 @@ class OrcQryCls{
          }
       oci_fetch_all($stmt, $res);
       oci_free_statement($stmt);
-      return $res;      
+      return $res;
       }
 
 
-   # check if there are more than 1 study in PACS and if so, if its LILA (Outside image study)  
-   public function check_lila_conflict($acc){
+   # Check for Possible Conflicts.
+   public function check_db_conflict($acc,$cause="Unknown"){
+      if($this->check_db_conflict_lila($acc)){ $cause = "LILA"; } 
+      elseif($this->check_db_conflict_schedstudy($acc)){ $cause = "Scheduled Study"; }
+      return $cause;
+      }
+
+
+   # Check if its in scheduled status conflicts
+   private function check_db_conflict_schedstudy($acc){
+      $strSQL = "SELECT COUNT(*) SCHEDS FROM STUDY WHERE (MY_ACCESSION_NUMBER = '$acc' AND MY_STATUS=0) ";
+
+      $stmt=oci_parse($this->orc_conn,$strSQL);
+      if(!oci_execute($stmt)){
+         $err = oci_error($stmt);
+         trigger_error('Query failed: ' . $err['message'], E_USER_ERROR);
+         }
+      oci_fetch_all($stmt, $res);
+      oci_free_statement($stmt);
+
+      
+      # Return true if there is results
+      return ($res['SCHEDS'][0])?true:false;
+      }
+
+
+   # Check LILA Conflicts
+   private function check_db_conflict_lila($acc){
       $strSQL = "SELECT COUNT(*) LILA FROM STUDY WHERE (MY_ACCESSION_NUMBER = '$acc' AND FACILITY_ID=20) ";
 
       $stmt=oci_parse($this->orc_conn,$strSQL);
@@ -74,9 +100,9 @@ class OrcQryCls{
          }
       oci_fetch_all($stmt, $res);
       oci_free_statement($stmt);
-      
+
       # Return true if there is results
-      return ($res['LILA'][0])?"LILA Study":"Unknown"; 
+      return ($res['LILA'][0])?true:false;
       }
 
 
@@ -94,7 +120,7 @@ class OrcQryCls{
                 S.MY_DESCRIPTION DEVICE,
                 M.MY_NAME MODALITY,
                 F.MY_DESCRIPTION FACILITY
-                
+
             FROM
                 FACILITY F,
                 ID_CONTEXT ID,
@@ -143,6 +169,6 @@ class OrcQryCls{
 
 
    public function __destruct(){ oci_close($this->orc_conn); }
-   
+
    }
 ?>
