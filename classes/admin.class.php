@@ -1,28 +1,37 @@
 <?php
-class adminsection{
+class adminsection extends SQLite3{
+   private $sqliteDB = sqliteDB;
+   private $connect;
+
+   public function __construct(){
+      $this->open($this->sqliteDB);
+      $this->connect = new SQLite3($this->sqliteDB);
+      }
+
+   public function __destruct(){
+      $this->connect->close();
+      unset($this->connect);
+      }
 
    function get_user_procedures(){
-      global $MysqlDB;
-      return $MysqlDB->rawQuery("SELECT uname,ANY_VALUE(fullname) FROM addprocedures WHERE processed='N' GROUP BY uname");
+      $d = array();
+      $sql = $this->connect->query("SELECT uname FROM addprocedures WHERE processed='N' GROUP BY uname");
+      while($row = $sql->fetchArray(SQLITE3_ASSOC)){ array_push($d, $row); }
+      return $d;
       }
 
    # Get data from mysql and send it to sybase
    function send_to_SyngoDB($u){
-      global $MysqlDB;
       global $SySQLDB;
       global $SySQLDB_PROD;
       global $UA;
 
-      $MysqlDB->where('uname', $u);
-      $MysqlDB->where('processed', 'N');
-      $MysqlDB->where('syngo_sent','N');
-      $MysqlDB->orderBy("dept","Asc");
-      $msqldata = $MysqlDB->get('addprocedures');
-
       # Insert row by row, if succcess then mark it off as sent
-      foreach ($msqldata as $row){
+      $sql = $this->connect->query("SELECT * FROM addprocedures WHERE processed='N' AND syngo_sent='N' AND uname LIKE '$u'");
+      while($row = $sql->fetchArray(SQLITE3_ASSOC)){ 
 	      # Test ; active = Yes "Y"
          $status = $SySQLDB->addprocedures_SB($row,'Y');
+         
          # Production ; active = No "N"
          $prod_insert = $SySQLDB_PROD->addprocedures_SB($row,'N');
 
@@ -30,8 +39,7 @@ class adminsection{
             # Update logs
             $UA->updateweblogs("Syngo insert database: Success. Row ID: {$row['id']}");
             # Mark sent
-            $MysqlDB->where('id',$row['id']);
-            $MysqlDB->update('addprocedures', array('syngo_sent'=>'Y'));
+            $this->connect->exec("UPDATE addprocedures SET syngo_senT='Y' WHERE id='{$row['id']}'");
             }
          else{ $UA->updateweblogs("Syngo insert database: Failed. Row ID: {$row['id']}"); }
          }
@@ -40,47 +48,35 @@ class adminsection{
 
 
    function check_send_ris($u,$disabled=''){
-      global $MysqlDB;
       if($u!=''){
-         $MysqlDB->where('uname',$u);
-         $MysqlDB->where('syngo_sent','N');
-         $disabled=(count($MysqlDB->get('addprocedures')))?"":'disabled';
+         $count = $this->connect->querySingle("SELECT count(*) FROM addprocedures WHERE syngo_sent='N' AND uname LIKE '$u' ");
+         $disabled=($count)?'':'disabled';
          }
       return $disabled;
       }
 
    function markdone($u){
-      global $MysqlDB;
       if($u!=''){
-         $MysqlDB->where('uname',$u);
-         $MysqlDB->update('addprocedures', array('processed'=>'Y'));
+         $this->connect->query("UPDATE addprocedures SET processed='Y' WHERE uname='$u'");
          }
       }
 
    function update_userrows($p){
-      global $MysqlDB;
       foreach ($p['ids'] as $key => $value) {
-         $data = Array ( "proc_no" => $p[$value.'_proc_no'],
-                         "dtl_svc_cd" => $this->get_dtl_svc_cd($p[$value.'_proc_no'],$p[$value.'_ABC'],$p[$value.'_dept']),
-                         "mammography_flag" => $p[$value.'_mammography_flag'],
-                         "active_flag" => $p[$value.'_active_flag'],
-                         "view_reactions" => $p[$value.'_view_reactions'],
-                         "dept" => $p[$value.'_dept'],
-                         "proc_desc_long" => $p[$value.'_proc_desc_long']);
-         $MysqlDB->where ('id', $value);
-         $MysqlDB->update ('addprocedures', $data);
+         $sql = "UPDATE addprocedures SET proc_no='".$p[$value.'_proc_no']."', dtl_svc_cd='".$this->get_dtl_svc_cd($p[$value.'_proc_no'],$p[$value.'_ABC'],$p[$value.'_dept'])."', ";
+         $sql .= "mammography_flag='".$p[$value.'_mammography_flag']."', active_flag='".$p[$value.'_active_flag']."', view_reactions='".$p[$value.'_view_reactions']."',";
+         $sql .= "dept='".$p[$value.'_dept']."', proc_desc_long='".$p[$value.'_proc_desc_long']."' WHERE id='$value'";
+         $this->connect->query($sql);
          }
       }
 
    private function get_dtl_svc_cd($proc_no,$abc,$dept,$dtl_svc_cd=''){
       global $SySQLDB;
       global $SySQLDB_PROD;
-      global $MysqlDB;
-
-      # MySql get Rcode
-      $MysqlDB->where('dept', $dept);
-      $rcode = $MysqlDB->getone("departments", Array("rcode"));
-      $dtl_svc_cd = $rcode['rcode'].$proc_no.$abc;
+     
+      $sql = $this->connect->query("SELECT rcode FROM departments WHERE dept='$dept'");
+      $row = $sql->fetchArray(SQLITE3_ASSOC);
+      $dtl_svc_cd = $row['rcode'].$proc_no.$abc;
 
       # this string must be unique in not only RIS, but EMR. Checking prod and test
       if($SySQLDB->check_dtl_svc_cd($dtl_svc_cd) || $SySQLDB_PROD->check_dtl_svc_cd($dtl_svc_cd)){
