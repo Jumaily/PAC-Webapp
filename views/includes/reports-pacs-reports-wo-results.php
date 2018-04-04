@@ -4,7 +4,13 @@ require_once(SPATH."/classes/sydb.class.php"); $SySQLDB_PROD = new SySQLDB(SyDB_
 $swr = $OrcQry->Get_Studies_WO_Results();
 
 ?>
+
+
 	        <div class="table-responsive">
+	        	<p>
+	        		<a href="/views/ssh/resend_report_pacs.php" rel="modal:open" class="btn btn-warning" role="button" >Resend Reports</a>
+	        	</p>
+	        	
 	        	<table class="table table-striped">
 	            	<thead>
 				        <tr>
@@ -25,6 +31,7 @@ $swr = $OrcQry->Get_Studies_WO_Results();
 				    <tbody>
 					            	
 				        <?php 
+				        
 				        for($i=0;$i<count($swr['ACCESSION']);$i++){
 				           	echo "<tr>
 				           			<td>{$swr['ACCESSION'][$i]}</td>
@@ -41,6 +48,7 @@ $swr = $OrcQry->Get_Studies_WO_Results();
 				           		 	<td>{$swr['FACILITY'][$i]}</td>
 				           		   </tr>\n";
 				           		}
+				           		
 				           	?>
 				        </tbody>
 				</table>
