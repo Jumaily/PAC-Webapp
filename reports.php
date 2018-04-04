@@ -5,6 +5,8 @@ if(is_null($SESSION->get_var('username')) || $SESSION->get_var('username')==''){
 <html lang="en">
    <head>
      <?php $exec->get_includes("header"); ?>
+     <script src="js/jquery.modal.min.js"></script>
+	 <link rel="stylesheet" href="css/jquery.modal.min.css" />
    </head>
    <body>
 
