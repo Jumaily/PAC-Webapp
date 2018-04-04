@@ -112,7 +112,9 @@ class SySQLDB extends SQLite3{
       $stmt = $this->connectionHandle->prepare("SELECT TOP 1 document_itn FROM activity_result WHERE acc_itn=$acc");
       $stmt->execute();
       $result = $stmt->fetchAll();
-      $doc_itn = $result[0]['document_itn'];
+
+      # Check if array is empty
+      $doc_itn = (!empty($result))?$result[0]['document_itn']:'Error, no Accession';
 
       $this->connect->exec("INSERT INTO document_itn_log (acc_itn, document_itn) VALUES ('$acc','$doc_itn')");
       }
@@ -172,5 +174,13 @@ class SySQLDB extends SQLite3{
       return $result;
       }
 
+   public function get_items_all_custom(){
+      $sql = "SELECT dept, proc_no, proc_desc_short, proc_desc_long, dtl_svc_cd, cpt_code1, cpt_descp2, cpt_descp3, cpt_descp4 FROM item WHERE active_flag='N' ORDER BY dept,proc_no";
+      $stmt = $this->connectionHandle->prepare($sql);
+      $stmt->execute();
+      $result = $stmt->fetchAll();
+      return $result;
+      }
+         
    }
 ?>
