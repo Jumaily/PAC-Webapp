@@ -7,6 +7,9 @@ $exec = new SYSTEM_GET_PATHS($_SERVER['PHP_SELF']);
 # path configs
 define('SPATH',realpath($_SERVER["DOCUMENT_ROOT"]));
 
+# Define DB
+define('sqliteDB',SPATH."/db/ris_dba.db");
+
 # run system basic classes & essential core files
 require_once(SPATH."/config/site.conf.php");
 require_once(SPATH."/classes/sessions.class.php"); $SESSION = new SessionCls();
@@ -14,11 +17,11 @@ require_once(SPATH."/classes/sessions.class.php"); $SESSION = new SessionCls();
 require_once(SPATH."/classes/sydb.class.php");
    $SySQLDB = new SySQLDB(SyDB_HOSTNAME,SyDB_DATABASE,SyDB_USERNAME,SyDB_PASSWORD);
    $SySQLDB_PROD = new SySQLDB(SyDB_HOSTNAME_PROD,SyDB_DATABASE_PROD,SyDB_USERNAME_PROD,SyDB_PASSWORD_PROD);
-# Mysql DB Class
-require_once(SPATH."/classes/mysqlidb.class.php"); $MysqlDB = new Mysqlidb(MySDB_HOSTNAME, MySDB_USERNAME, MySDB_PASSWORD, MySDB_DATABASE);
-require_once(SPATH."/classes/useractivity.class.php"); $UA = new UserActivity();
 
+
+require_once(SPATH."/classes/useractivity.class.php"); $UA = new UserActivity();
 require_once(SPATH."/classes/ldap.class.php"); $ldap = new ldap_auth();
+
 
 
 # Configure Path Names
