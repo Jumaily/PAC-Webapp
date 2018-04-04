@@ -18,6 +18,7 @@ if(is_null($SESSION->get_var('username')) || $SESSION->get_var('username')==''){
       $swr = $OrcQry->Get_Studies_WO_Results();
       $accs = '';
       for($i=0;$i<count($swr['ACCESSION']);$i++){ $accs .= "{$swr['ACCESSION'][$i]}\n"; }
+      
 
       # Write all accession numbers at once to file (overwrite) & close file
       $my_file = 'views/dl-csv/'.$filename;
@@ -30,9 +31,9 @@ if(is_null($SESSION->get_var('username')) || $SESSION->get_var('username')==''){
 	
       # issue commands and output 
       echo "<pre>";
-      echo $sshc->issue_cmd("curl $txt_file_htmlpath > $filename");
-      echo $sshc->issue_cmd("/SMSCLN/tst/bin/resend_main 3 MPACS1 SIGNED ALL Y /home/dialup/$filename");
-      echo "</pre>";
+      echo "Writing accessions to file: ".$sshc->issue_cmd("curl $txt_file_htmlpath > $filename");
+      #echo $sshc->issue_cmd("resend_main 3 MPACS1 SIGNED ALL Y /home/dialup/$filename");
+      echo "</pre>resend_main 3 MPACS1 SIGNED ALL Y $filename";
 
       ?>
    </body>
